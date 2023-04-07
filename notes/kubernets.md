@@ -1,17 +1,17 @@
-# setup kubernetes cluster
+<h1 style="text-align: center;"> setup kubernetes cluster</h1>
 
 ref: [https://adamtheautomator.com/cri-o/](https://adamtheautomator.com/cri-o/)
 
 ---
 
-## Enabling kernel modules (overlay and br_netfilter)
+# Enabling kernel modules (overlay and br_netfilter)
 
 ```
 modprobe overlay
 modprobe br_netfilter
 ```
 
-## automatically load kernel modules via the config file
+# automatically load kernel modules via the config file
 
 ```
 cat <<EOF | sudo tee /etc/modules-load.d/kubernetes.conf
@@ -20,7 +20,7 @@ br_netfilter
 EOF
 ```
 
-## Checking kernel module status
+# Checking kernel module status
 ```
 lsmod | grep overlay
 lsmod | grep br_netfilter
@@ -28,7 +28,7 @@ lsmod | grep br_netfilter
 
 ---
 
-## setting up kernel parameters via config file
+# setting up kernel parameters via config file
 
 ```
 cat <<EOF | sudo tee /etc/sysctl.d/kubernetes.conf
@@ -42,7 +42,7 @@ sysctl --system
 ```
 ---
 
-## Disabling SWAP
+# Disabling SWAP
 ```
 swapoff -a
 ```
@@ -59,9 +59,10 @@ free -m
 
 ---
 
-## Firewall configuration
+# Firewall Configuration
 
-### Master node
+## Master node
+
 ```
 # control plane
 firewall-cmd --permanent --add-port=6443/tcp
@@ -78,7 +79,8 @@ firewall-cmd --permanent --add-port=4789/tcp
 firewall-cmd --permanent --add-port=2379/tcp
 ```
 
-### Worker node
+## Worker node
+
 ```
 # worker nodes
 firewall-cmd --permanent --add-port=10250/tcp
@@ -91,18 +93,23 @@ firewall-cmd --permanent --add-port=4789/tcp
 firewall-cmd --permanent --add-port=2379/tcp
 ```
 
-### reload firewall
+## FirewallBackend Configuration
+
+ref: [RHEL](https://techdocs.broadcom.com/us/en/fibre-channel-networking/sannav/management-portal-installation-and-migration/2-2-0x/v26510227/Configuring-the-Firewalld-Backend.html)
+
+modify `/etc/firewalld/firewalld.conf` set
+
+`FirewallBackend=iptables`
+
+
+## reload firewall
 ```
 firewall-cmd --reload
 ```
 
-```
-FirewallBackend=iptables
-```
-
 ---
 
-## Install CRI-O
+# Install CRI-O
 
 Ref: [Github](https://github.com/cri-o/cri-o/blob/main/install.md#fedora-31-or-later)
 
@@ -142,7 +149,7 @@ systemctl enable crio
 
 ---
 
-## Install Kubeadm
+# Install Kubeadm
 
 Ref: [kubernetes.io](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl)
 
@@ -219,7 +226,7 @@ kubectl get node -o wide
 ```
 ---
 
-## Deploy Calico Networking
+# Deploy Calico Networking
 
 ### Downloading Calico YAML manifest file
 ```
@@ -258,7 +265,7 @@ kubeadm join [master_ip] --token [token] --discovery-token-ca-cert-hash [hash] -
 
 ---
 
-# <h1>Common problem</h1>
+# <h1 style="text-align: center;">Common problems</h1>
 
 
 ## <h2>kubernetes dashboard with kubectl proxy shows Error </h2>
