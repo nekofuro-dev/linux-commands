@@ -22,3 +22,10 @@ e.g.
 ```
 ssh -L 8001:vm7:8001 root@vm7
 ```
+
+# Disable ssh password login
+
+edit `/etc/ssh/sshd_config`
+```
+PasswordAuthentication no
+```
