@@ -175,6 +175,7 @@ sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 sudo systemctl enable --now kubelet
 ```
 
+<del>
 ### exclude from auto update
 
 edit `/etc/dnf/dnf.conf`
@@ -182,6 +183,7 @@ add the following line to the end
 ```
 exclude=kubelet kubeadm kubectl
 ```
+</del>
 
 ### Pull container images for Kubernetes
 ```
