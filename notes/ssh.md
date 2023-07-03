@@ -29,3 +29,11 @@ edit `/etc/ssh/sshd_config`
 ```
 PasswordAuthentication no
 ```
+
+# If authorized_keys is not working
+
+```
+chmod 600 ~/.ssh/authorized_keys
+```
+
+https://serverfault.com/a/380218
